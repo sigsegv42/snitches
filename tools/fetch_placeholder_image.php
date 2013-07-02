@@ -21,19 +21,27 @@ class ImageFetcher extends Cli {
 	 */
 	public function run($argv) {
 		if (sizeof($argv) < 4) {
-			echo "Usage: " . $argv[0] . ' <width> <height> <filename> [label]' . "\n";
+			echo "Usage: " . $argv[0] . ' <width> <height> <filename> [label] [background_color] [text_color]' . "\n";
 			return;
 		}
 		$width = $argv[1];
 		$height = $argv[2];
 		$filename = $argv[3];
 		$label = null;
-		if (sizeof($argv) == 5) {
+		$background = null;
+		$foreground = null;
+		if (sizeof($argv) >= 5) {
 			$label = $argv[4];
+		}
+		if (sizeof($argv) >= 6) {
+			$background = $argv[5];
+		}
+		if (sizeof($argv) >= 7) {
+			$foreground = $argv[6];
 		}
 		$outdir = realpath(__DIR__ . '/cache/');
 		$placeholder = new Placeholder($this->_log, $outdir);
-		$ret = $placeholder->fetch($width, $height, $filename, $label);
+		$ret = $placeholder->fetch($width, $height, $filename, $label, $background, $foreground);
 		if ($ret === false) {
 			echo 'Error fetching placeholder image!' . "\n";
 			return;

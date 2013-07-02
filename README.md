@@ -1,6 +1,11 @@
 Shopify API Tool
 ================
 
+Dependencies
+============
+
+* [BT Framework](https://github.com/sigsegv42/bt-framework/)
+
 
 Installation
 ============
@@ -26,7 +31,19 @@ Create database:
 mysql -uroot < schema/snitches.sql
 ```
 
-Updating ORM files:
+Developing
+==========
+
+Regenerating ORM files:
 ```bash
 php backend/vendor/tqf/bt-framework/tools/generate_tables.php Snitches
 ```
+
+Fetching placeholder images, e.g.:
+
+```bash 
+php tools/fetch_placeholder_image.php 160 160 willamette.gif Willamette
+```
+
+The resulting 160x160 image will be saved into tools/cache/willamette.gif
+

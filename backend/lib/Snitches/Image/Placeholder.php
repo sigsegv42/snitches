@@ -34,11 +34,19 @@ class Placeholder {
 	 * @param integer $height image height
 	 * @param string $filename output filename
 	 * @param string $text optional text to display in placeholder image
+	 * @param string $background optional background hex color code
+	 * @param string $foreground optional text hex color code
 	 *
 	 * @return boolean 
 	 */
-	public function fetch($width, $height, $filename, $text = null) {
+	public function fetch($width, $height, $filename, $text = null, $background = null, $foreground = null) {
 		$url = 'http://placehold.it/' . $width . 'x' . $height;
+		if ($background !== null) {
+			$url .= '/' . $background;
+		}
+		if ($foreground !== null) {
+			$url .= '/' . $foreground;
+		}
 		if ($text !== null) {
 			$url .= '&text=' . $text;
 		}
