@@ -1,0 +1,26 @@
+<?php
+/**
+ * (c) Josh Farr <j.wgasa@gmail.com>
+ */
+
+$settings = 
+array(
+	'db' => array(
+		'name' 		=> 'snitches',
+		'host' 		=> 'localhost',
+		'user' 		=> 'root',
+		'password' 	=> null
+	),
+	'log' => array(
+		'general' 	=> '/tmp/snitches.log',
+		'cli' 		=> '/tmp/snitches-cli.log'
+	),
+	'shopify' => array(
+		'api_key' => '<SHOPIFY_API_KEY>',
+		'password' => '<SHOPIFY_API_PASSWORD>'
+	),
+
+	'timezone' => 'UTC'
+);
+
+return $settings;
