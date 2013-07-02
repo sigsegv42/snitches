@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sigsegv42/bt-framework.git",
-                "reference": "4ba60548991a3812d85a767776c198b9f86b85ed"
+                "reference": "af766061865f9956a32f52c1392c32ee60c4e079"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sigsegv42/bt-framework/zipball/4ba60548991a3812d85a767776c198b9f86b85ed",
-                "reference": "4ba60548991a3812d85a767776c198b9f86b85ed",
+                "url": "https://api.github.com/repos/sigsegv42/bt-framework/zipball/af766061865f9956a32f52c1392c32ee60c4e079",
+                "reference": "af766061865f9956a32f52c1392c32ee60c4e079",
                 "shasum": ""
             },
             "type": "library",
@@ -30,7 +30,7 @@
                 "source": "https://github.com/sigsegv42/bt-framework/tree/master",
                 "issues": "https://github.com/sigsegv42/bt-framework/issues"
             },
-            "time": "2013-07-02 16:42:44"
+            "time": "2013-07-02 20:11:13"
         }
     ],
     "packages-dev": [

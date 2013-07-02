@@ -25,3 +25,8 @@ Create database:
 ```bash
 mysql -uroot < schema/snitches.sql
 ```
+
+Updating ORM files:
+```bash
+php backend/vendor/tqf/bt-framework/tools/generate_tables.php Snitches
+```
