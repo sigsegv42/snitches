@@ -1,0 +1,52 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "7c4ce23f91b6da3e5e61980c71b196b3",
+    "packages": [
+        {
+            "name": "tqf/bt-framework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sigsegv42/bt-framework.git",
+                "reference": "4ba60548991a3812d85a767776c198b9f86b85ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sigsegv42/bt-framework/zipball/4ba60548991a3812d85a767776c198b9f86b85ed",
+                "reference": "4ba60548991a3812d85a767776c198b9f86b85ed",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "BT": "src/"
+                }
+            },
+            "description": "The PHP application framework used by the BrewTheory application.",
+            "support": {
+                "source": "https://github.com/sigsegv42/bt-framework/tree/master",
+                "issues": "https://github.com/sigsegv42/bt-framework/issues"
+            },
+            "time": "2013-07-02 16:42:44"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "tqf/bt-framework": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
