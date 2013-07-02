@@ -1,0 +1,17 @@
+{
+	"config": {
+		"vendor-dir": "backend/vendor"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/sigsegv42/bt-framework"
+		}
+	],
+	"require": {
+		"tqf/bt-framework": "dev-master"
+	},
+	"autoload": {
+		"psr-0": { "Snitches\\": "backend/lib/" }
+	}
+}
