@@ -42,5 +42,5 @@ class ImageFetcher extends Cli {
 }
 
 
-$fetcher = new ImageFetcher(__DIR__);
+$fetcher = new ImageFetcher(realpath(__DIR__ . '/../backend/app/'));
 $fetcher->run($argv);
