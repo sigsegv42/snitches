@@ -40,7 +40,7 @@ $front = new Front($routes, $settings, $log);
 // directory where application page controllers are located
 $front->controllerPath($actualPath . '/controllers/');
 // directory where view/layout files are located
-$front->viewPath($actualPath '/views/');
+$front->viewPath($actualPath . '/views/');
 
 // handle the request and get a response
 $response = $front->handle($request);
