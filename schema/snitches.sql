@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS variant (
 	sku varchar(100) not null,
 	taxable tinyint(1) default 1,
 	title varchar(150),
+	dirty tinyint(1) default 0,
 	PRIMARY KEY (variant_uuid),
 	FOREIGN KEY (product_uuid) REFERENCES product (product_uuid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -57,22 +58,41 @@ CREATE TABLE IF NOT EXISTS product_option (
 CREATE TABLE IF NOT EXISTS variant_option (
 	variant_option_uuid varchar(36) not null,
 	product_option_uuid varchar(36) not null,
+	name varchar(50) not null,
 	position int(10) unsigned not null,
 	PRIMARY KEY (variant_option_uuid),
 	FOREIGN KEY (product_option_uuid) REFERENCES product_option (product_option_uuid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 CREATE TABLE IF NOT EXISTS image (
 	image_uuid varchar(36) not null,
 	product_uuid varchar(36) not null,
+	shopify_id int(10) unsigned not null,
 	date_created_timestamp int(11) unsigned not null,
 	date_updated_timestamp int(11) unsigned not null,
 	position int(10) unsigned not null,
 	src varchar(150) not null,
 	PRIMARY KEY (image_uuid), 
 	FOREIGN KEY (product_uuid) REFERENCES product (product_uuid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS combo (
+	combo_uuid varchar(36) not null,
+	variant_uuid varchar(36) default null,
+	PRIMARY KEY (combo_uuid),
+	FOREIGN KEY (variant_uuid) REFERENCES variant (variant_uuid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS combo_option (
+	combo_option_uuid varchar(36) not null,
+	combo_uuid varchar(36) not null,
+	product_option_uuid varchar(36) not null,
+	PRIMARY KEY (combo_option_uuid),
+	FOREIGN KEY (combo_uuid) REFERENCES combo (combo_uuid),
+	FOREIGN KEY (product_option_uuid) REFERENCES product_option (product_option_uuid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

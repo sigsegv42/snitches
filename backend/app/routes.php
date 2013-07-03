@@ -18,9 +18,9 @@ $routes
 	->get('/api/images',			'Images::getImages')
 	->get('/api/combos',			'Combos::getCombos')
 
-	->post('/api/combos',			'Combos::createCombos')
-	->post('/api/sync',				'Index::sync')
-	->post('/api/variants/stock',	'Variants::updateStock')
+	->post('/api/combos/:id',			'Combos::createCombos')
+	->post('/api/sync',					'Index::sync')
+	->post('/api/variants/stock/:id',	'Variants::updateStock')
 ;
 
 return $routes;

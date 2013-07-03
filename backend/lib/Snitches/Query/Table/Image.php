@@ -40,6 +40,16 @@ class Image extends Table {
 
 
 	/**
+	 * Get the shopify_id table column definition
+	 * 
+	 * @return Column
+	 */
+	public function shopifyId() {
+		return $this->column('shopify_id');
+	}
+
+
+	/**
 	 * Get the date_created_timestamp table column definition
 	 * 
 	 * @return Column

@@ -7,8 +7,9 @@
 namespace Snitches\Query\Db;
 
 use BT\Query\Db;
+use Snitches\Query\Table;
 
-class Brewtheory implements Db {
+class Snitches implements Db {
 	/**
 	 * Get the physical name of the database
 	 * 
@@ -30,6 +31,8 @@ class Brewtheory implements Db {
 
 	const TABLE_ATTRIBUTE_KIND = 'attribute_kind';
 	const TABLE_ATTRIBUTE_VALUE = 'attribute_value';
+	const TABLE_COMBO = 'combo';
+	const TABLE_COMBO_OPTION = 'combo_option';
 	const TABLE_IMAGE = 'image';
 	const TABLE_PRODUCT = 'product';
 	const TABLE_PRODUCT_OPTION = 'product_option';
@@ -47,6 +50,8 @@ class Brewtheory implements Db {
 		$allTables = array(
 			self::TABLE_ATTRIBUTE_KIND,
 			self::TABLE_ATTRIBUTE_VALUE,
+			self::TABLE_COMBO,
+			self::TABLE_COMBO_OPTION,
 			self::TABLE_IMAGE,
 			self::TABLE_PRODUCT,
 			self::TABLE_PRODUCT_OPTION,
@@ -63,6 +68,12 @@ class Brewtheory implements Db {
 				break;
 			case self::TABLE_ATTRIBUTE_VALUE:
 				$tableInstance = new Table\AttributeValue($this);
+				break;
+			case self::TABLE_COMBO:
+				$tableInstance = new Table\Combo($this);
+				break;
+			case self::TABLE_COMBO_OPTION:
+				$tableInstance = new Table\ComboOption($this);
 				break;
 			case self::TABLE_IMAGE:
 				$tableInstance = new Table\Image($this);

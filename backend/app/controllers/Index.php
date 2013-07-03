@@ -8,7 +8,7 @@ use BT\Controller\Page;
 use BT\Validate\NotEmpty;
 use BT\Query\Driver;
 
-use Snitches\Shopify\Client;
+use Snitches\Service\Sync;
 
 class IndexController extends Page {
 	/**
@@ -25,9 +25,9 @@ class IndexController extends Page {
 	 * POST /api/sync
 	 */
 	public function sync() {
-		$client = new Client($this->_log, $this->_settings);
-		$products = $client->getProducts();
-		die(print_r($products, true));
+		$driver = new Driver($this->settings());
+		$svc = new Sync($driver, $this->log());
+		$svc->download($this->_settings);
 
 		$response = $this->response();
 		$response->redirect('/');

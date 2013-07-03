@@ -188,4 +188,14 @@ class Variant extends Table {
 		return $this->column('title');
 	}
 
+
+	/**
+	 * Get the dirty table column definition
+	 * 
+	 * @return Column
+	 */
+	public function dirty() {
+		return $this->column('dirty');
+	}
+
 }

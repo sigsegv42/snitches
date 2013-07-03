@@ -87,6 +87,6 @@ class Client {
 		$url = 'https://' . $this->_domain . '/admin/products/' . $id . '/images.json';
 		$response = $client->request($url);
 		$images = json_decode($response['body']);
-		return $images;
+		return $images->images;
 	}
 }

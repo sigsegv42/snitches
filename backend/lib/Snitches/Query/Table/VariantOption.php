@@ -40,6 +40,16 @@ class VariantOption extends Table {
 
 
 	/**
+	 * Get the name table column definition
+	 * 
+	 * @return Column
+	 */
+	public function name() {
+		return $this->column('name');
+	}
+
+
+	/**
 	 * Get the position table column definition
 	 * 
 	 * @return Column
