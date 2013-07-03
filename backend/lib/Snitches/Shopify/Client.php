@@ -67,7 +67,24 @@ class Client {
 		$url = 'https://' . $this->_domain . '/admin/products.json';
 		$product = $model->dehydrate();
 		$response = $client->request($url, 'POST', $product);
+		return $response;
+	}
 
+	public function createProductFromJSON($json) {
+		$client = $this->createClient();
+		$url = 'https://' . $this->_domain . '/admin/products.json';
+		$client->header('Content-Type', 'application/json; charset=utf-8');
+		$response = $client->request($url, 'POST', $json);
+		return $response;
+	}
+
+
+	public function updateVariantFromJSON($variantId, $json) {
+		$client = $this->createClient();
+		$url = 'https://' . $this->_domain . '/admin/variants/' . $variantId . '.json';
+		$client->header('Content-Type', 'application/json; charset=utf-8');
+		$response = $client->request($url, 'PUT', $json);
+		return $response;
 	}
 
 

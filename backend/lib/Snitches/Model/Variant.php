@@ -235,8 +235,9 @@ class Variant extends Model {
 			column($table->dateUpdatedTimestamp())->
 			column($table->id())->
 			column($table->productUuid())->
+			column($table->dirty())->
 			from($table)->
-			where($query->expr()->eq($table->id(), $query->param()->string($this->_uuid)));
+			where($query->expr()->eq($table->id(), $query->param()->string($id)));
 		$sql = $query->select();
 		$result = $this->_driver->query($sql);
 		if (sizeof($result) == 0) {

@@ -17,12 +17,12 @@ $routes
 
 	->get('/api/products/:id/images',	'Index::getImages')
 	->get('/api/products',				'Index::getProducts')
-	->get('/api/combos',				'Combos::getCombos')
+	->get('/api/combos',				'Index::getCombos')
 
-	->post('/api/combos/:id',			'Combos::createCombos')
+	->post('/api/combos/:id',			'Index::createCombos')
 	->post('/api/sync/download',		'Index::syncDownload')
 	->post('/api/sync/upload',			'Index::syncUpload')
-	->post('/api/variants/stock/:id',	'Variants::updateStock')
+	->post('/api/variants/:id/stock',	'Index::updateStock')
 ;
 
 return $routes;

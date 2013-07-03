@@ -190,7 +190,7 @@ class Product extends Model {
 					$this->_uuid
 				);
 				$this->_driver->prepare($sql);
-				$result = $this->_driver->exec($values);					
+				$result = $this->_driver->exec($values);
 				$this->_options[$slot]['id'] = $optionId;
 			}
 		}

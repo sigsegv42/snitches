@@ -10,6 +10,7 @@ use BT\Query\Driver;
 
 use Snitches\Service\Sync;
 use Snitches\Service\Product;
+use Snitches\Model\Variant;
 
 class IndexController extends Page {
 	/**
@@ -112,8 +113,43 @@ class IndexController extends Page {
 			'Flaked Oats'
 		);
 
-		foreach ($products as $product) {
+		$driver = new Driver($this->settings());
+		$svc = new Product($driver, $this->log());
 
+		$variants = array();
+		$position = 1;
+		foreach ($options as $productOption) {
+			if ($position == sizeof($options) + 1) {
+				break;
+			}
+			foreach ($productOption as $variantOption) {
+				$combos = array_slice($options, $position);
+				$combos = array_pop($combos);
+				if (!is_array($combos)) {
+					break;
+				}
+				foreach ($combos as $variantCombo) {
+					$variantOptions = array();
+					$variantOptions[1] = $variantOption;
+					$variantOptions[2] = $variantCombo;
+					$variants[] = $variantOptions;
+				}
+			}
+			$position++;
+		}
+		foreach ($products as $product) {
+			$properties = array(
+				'name' => $product,
+				'vendor' => 'Weyermann',
+				'type' => 'Malt'
+			);
+			$id = $svc->createProduct($properties);
+			$position = 1;
+			foreach ($variants as $options) {
+				$variant = array('position' => $position, 'options' => $options);
+				$svc->createVariant($id, $variant);
+				$position++;
+			}
 		}
 
 		$crystalOptions = array(
@@ -122,7 +158,45 @@ class IndexController extends Page {
 			'60L',
 			'120L'
 		);
+		$crystalProperties = array('name' => 'Crystal Malt', 'vendor' => 'Rahr', 'type' => 'Malt');
+		$crystalId = $svc->createProduct($crystalProperties);
+		$position = 1;
+		foreach ($crystalOptions as $crystalOption) {
+			foreach ($variants as $options) {
+				$options[3] = $crystalOption;
+				$variant = array('position' => $position, 'options' => $options);
+				$svc->createVariant($id, $variant);
+				$position++;
+			}
+		}
+		$response = $this->response();
+		$response->redirect('/');
+		return $response;
+	}
 
+
+	/**
+	 * POST /api/variants/:id/stock
+	 */
+	public function updateStock($params) {
+		$variantId = $params['id'];
+		$request = $this->request();
+		$driver = new Driver($this->settings());
+		$svc = new Sync($driver, $this->log());
+		$model = new Variant($driver, $this->log());
+		$model->load($variantId);
+		$obj = array(
+			"variant" => array(
+				"id" => $model->_shopifyId,
+				"inventory_quantity" => $request->query('quantity')
+			)
+		);
+		$json = json_encode($obj);
+		$result = $svc->updateVariantStock($this->settings(), $variantId, $json);
+
+		$response = $this->response();
+		$response->redirect('/');
+		return $response;
 	}
 
 

@@ -102,8 +102,45 @@ class Sync extends Service {
 		}
 	}
 
+	public function updateVariantStock(Settings $settings, $variantId, $json) {
+		$client = new Client($this->_log, $settings);
+		$response = $client->updateVariantFromJSON($variantId, $json);
+		return $response;
+	}
 
 	public function upload(Settings $settings) {
+		$query = new Query();
+		$db = new Db();
+		$table = $db->table(Db::TABLE_PRODUCT);
+		$client = new Client($this->_log, $settings);
 
+		$query->
+			column($table->productType())->
+			column($table->title())->
+			column($table->vendor())->
+			column($table->id())->
+			from($table)->
+			where($query->expr()->isNull($table->shopifyId()));
+		$sql = $query->select();
+		$newProducts = $this->_driver->query($sql);
+		foreach ($newProducts as $product) {
+			$obj = array(
+				'product' => array(
+					'title' => $product['title'],
+					'vendor' => $product['vendor'],
+					'product_type' => $product['product_type']
+				)
+			);
+			$json = json_encode($obj);
+			$response = $client->createProductFromJSON($json);
+			if ($response['info']['http_code'] != 201) {
+				continue;
+			}
+			$obj = json_decode($response['body']);
+			$model = new Product($this->_driver, $this->_log);
+			$model->hydrate($obj->product);
+			$model->_uuid = $product['product_uuid'];
+			$model->save();
+		}
 	}
 }

@@ -16,6 +16,31 @@ use Snitches\Query\Db\Snitches as Db;
 
 
 class Product extends Service {
+	public function createProduct($properties) {
+		$query = new Query();
+		$db = new Db();
+		$table = $db->table(Db::TABLE_PRODUCT);
+		$query->
+			column($table->id())->
+			column($table->title())->
+			column($table->productType())->
+			column($table->vendor())->
+			into($table);
+		$uuid = new UUID();
+		$productId = $uuid->v4();
+		$values = array(
+			$productId,
+			$properties['name'],
+			$properties['type'],
+			$properties['vendor']
+		);
+		$sql = $query->insert();
+		$this->_driver->prepare($sql);
+		$result = $this->_driver->exec($values);
+		return $productId;
+	}
+
+
 	public function getProducts() {
 		$query = new Query();
 		$db = new Db();
@@ -37,6 +62,48 @@ class Product extends Service {
 		$sql = $query->select();
 		$result = $this->_driver->query($sql);
 		return $result;
+	}
+
+	public function createVariant($productId, $properties) {
+		$query = new Query();
+		$db = new Db();
+		$table = $db->table(Db::TABLE_VARIANT);
+		$query->
+			column($table->id())->
+			column($table->productUuid())->
+			column($table->position())->
+			into($table);
+		$sql = $query->insert();
+		$this->_driver->prepare($sql);
+		$uuid = new UUID();
+		$variantId = $uuid->v4();
+		$values = array(
+			$variantId,
+			$productId,
+			$properties['position']
+		);
+		$result = $this->_driver->exec($values);
+		$table = $db->table(Db::TABLE_VARIANT_OPTION);
+		foreach ($properties['options'] as $position => $option) {
+			$optionId = $uuid->v4();
+			$query = new Query();
+			$query->
+				column($table->id())->
+				column($table->variantUuid())->
+				column($table->name())->
+				column($table->position())->
+				into($table);
+			$values = array(
+				$optionId,
+				$variantId,
+				$option,
+				$position
+			);
+			$sql = $query->insert();
+			$this->_driver->prepare($sql);
+			$result = $this->_driver->exec($values);
+		}
+		return $variantId;
 	}
 
 
@@ -63,10 +130,30 @@ class Product extends Service {
 			column($table->taxable())->
 			column($table->title())->
 			from($table)->
-			where($query->expr()->eq($table->productUuid(), $query->param()->string($productId)));
+			where(
+				$query->expr()->eq($table->productUuid(), $query->param()->string($productId))
+			);
 		$sql = $query->select();
 		$result = $this->_driver->query($sql);
-		return $result;
+
+		$optionTable = $db->table(Db::TABLE_VARIANT_OPTION);
+		$variants = array();
+		foreach ($result as $variant) {
+			$query = new Query();
+			$query->
+				column($optionTable->name())->
+				column($optionTable->position())->
+				from($optionTable)->
+				where($query->expr()->eq($optionTable->variantUuid(), $query->param()->string($variant['variant_uuid'])));
+			$sql = $query->select();
+			$result = $this->_driver->query($sql);
+			foreach ($result as $option) {
+				$key = 'option' . $option['position'];
+				$variant[$key] = $option['name'];
+			}
+			$variants[] = $variant;
+		}
+		return $variants;
 	}
 
 
