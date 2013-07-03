@@ -9,6 +9,7 @@ use BT\Validate\NotEmpty;
 use BT\Query\Driver;
 
 use Snitches\Service\Sync;
+use Snitches\Service\Product;
 
 class IndexController extends Page {
 	/**
@@ -17,6 +18,50 @@ class IndexController extends Page {
 	public function index() {
 		$response = $this->response();
 		$response->render('index');
+		return $response;
+	}
+
+
+	/**
+	 * GET /api/products
+	 */
+	public function getProducts() {
+		$driver = new Driver($this->settings());
+		$svc = new Product($driver, $this->log());
+		$records = $svc->getProducts();
+		$obj = new stdClass();
+		$obj->products = $records;
+		$response = $this->response();
+		$response->json($obj);
+		return $response;
+	}
+
+
+	/**
+	 * GET /api/products/:id/variants
+	 */
+	public function getVariants($params) {
+		$driver = new Driver($this->settings());
+		$svc = new Product($driver, $this->log());
+		$records = $svc->getVariants($params['id']);
+		$obj = new stdClass();
+		$obj->variants = $records;
+		$response = $this->response();
+		$response->json($obj);
+		return $response;
+	}
+
+	/**
+	 * GET /api/products/:id/images
+	 */
+	public function getImages($params) {
+		$driver = new Driver($this->settings());
+		$svc = new Product($driver, $this->log());
+		$records = $svc->getImages($params['id']);
+		$obj = new stdClass();
+		$obj->images = $records;
+		$response = $this->response();
+		$response->json($obj);
 		return $response;
 	}
 

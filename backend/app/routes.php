@@ -11,13 +11,13 @@ use BT\Router\Router;
 $routes = new Router();
 
 $routes
-	->get('/',						'Index::index')
-	->post('/generate',				'Index::generateProducts')
+	->get('/api/products/:id/variants',	'Index::getVariants')
+	->get('/',							'Index::index')
+	->post('/generate',					'Index::generateProducts')
 
-	->get('/api/products',			'Products::getProducts')
-	->get('/api/variants',			'Variants::getVariants')
-	->get('/api/images',			'Images::getImages')
-	->get('/api/combos',			'Combos::getCombos')
+	->get('/api/products/:id/images',	'Index::getImages')
+	->get('/api/products',				'Index::getProducts')
+	->get('/api/combos',				'Combos::getCombos')
 
 	->post('/api/combos/:id',			'Combos::createCombos')
 	->post('/api/sync/download',		'Index::syncDownload')
