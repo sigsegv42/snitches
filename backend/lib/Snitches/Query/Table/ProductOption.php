@@ -8,24 +8,24 @@ namespace Snitches\Query\Table;
 use BT\Query\Db;
 use BT\Query\Table;
 
-class Image extends Table {
+class ProductOption extends Table {
 	/**
 	 * Default constructor
 	 * 
 	 * @param Db $db
 	 */
 	public function __construct(Db $db) {
-		parent::__construct($db, 'image');
+		parent::__construct($db, 'product_option');
 	}
 
 
 	/**
-	 * Get the image_uuid table column definition
+	 * Get the product_option_uuid table column definition
 	 * 
 	 * @return Column
 	 */
 	public function id() {
-		return $this->column('image_uuid');
+		return $this->column('product_option_uuid');
 	}
 
 
@@ -40,22 +40,22 @@ class Image extends Table {
 
 
 	/**
-	 * Get the date_created_timestamp table column definition
+	 * Get the name table column definition
 	 * 
 	 * @return Column
 	 */
-	public function dateCreatedTimestamp() {
-		return $this->column('date_created_timestamp');
+	public function name() {
+		return $this->column('name');
 	}
 
 
 	/**
-	 * Get the date_updated_timestamp table column definition
+	 * Get the title table column definition
 	 * 
 	 * @return Column
 	 */
-	public function dateUpdatedTimestamp() {
-		return $this->column('date_updated_timestamp');
+	public function title() {
+		return $this->column('title');
 	}
 
 
@@ -66,16 +66,6 @@ class Image extends Table {
 	 */
 	public function position() {
 		return $this->column('position');
-	}
-
-
-	/**
-	 * Get the src table column definition
-	 * 
-	 * @return Column
-	 */
-	public function src() {
-		return $this->column('src');
 	}
 
 }
