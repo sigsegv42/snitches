@@ -1,4 +1,8 @@
 <?php
+/**
+ * (c) Josh Farr <j.wgasa@gmail.com>
+ * 
+ */
 
 namespace Snitches\Image;
 
