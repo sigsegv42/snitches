@@ -17,7 +17,8 @@ array(
 	),
 	'shopify' => array(
 		'api_key' => '<SHOPIFY_API_KEY>',
-		'password' => '<SHOPIFY_API_PASSWORD>'
+		'password' => '<SHOPIFY_API_PASSWORD>',
+		'domain' => 'snitches.myshopify.com'
 	),
 
 	'timezone' => 'UTC'
