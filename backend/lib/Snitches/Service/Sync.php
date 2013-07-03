@@ -30,6 +30,7 @@ class Sync extends Service {
 			foreach ($product->variants as $variant) {
 				$variantModel = new Variant($this->_driver, $this->_log);
 				$variantModel->hydrate($variant);
+				$variantModel->_product = $model;
 				$model->_variants[$variantModel->_shopifyId] = $variantModel;
 			}
 			$images = $client->getImages($model->_shopifyId);

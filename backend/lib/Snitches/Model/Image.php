@@ -38,6 +38,16 @@ class Image extends Model {
 
 
 	/**
+	 * Convert the model into a json representation
+	 *
+	 * @return string
+	 */
+	public function dehydrate() {
+
+	}
+
+
+	/**
 	 * Save the model to the local database
 	 */
 	public function save() {

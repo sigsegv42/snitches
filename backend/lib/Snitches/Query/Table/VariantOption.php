@@ -30,12 +30,12 @@ class VariantOption extends Table {
 
 
 	/**
-	 * Get the product_option_uuid table column definition
+	 * Get the variant_uuid table column definition
 	 * 
 	 * @return Column
 	 */
-	public function productOptionUuid() {
-		return $this->column('product_option_uuid');
+	public function variantUuid() {
+		return $this->column('variant_uuid');
 	}
 
 

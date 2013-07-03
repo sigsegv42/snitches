@@ -57,11 +57,11 @@ CREATE TABLE IF NOT EXISTS product_option (
 
 CREATE TABLE IF NOT EXISTS variant_option (
 	variant_option_uuid varchar(36) not null,
-	product_option_uuid varchar(36) not null,
+	variant_uuid varchar(36) not null,
 	name varchar(50) not null,
 	position int(10) unsigned not null,
 	PRIMARY KEY (variant_option_uuid),
-	FOREIGN KEY (product_option_uuid) REFERENCES product_option (product_option_uuid)
+	FOREIGN KEY (variant_uuid) REFERENCES variant (variant_uuid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

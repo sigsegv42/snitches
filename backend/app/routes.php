@@ -12,6 +12,7 @@ $routes = new Router();
 
 $routes
 	->get('/',						'Index::index')
+	->post('/generate',				'Index::generateProducts')
 
 	->get('/api/products',			'Products::getProducts')
 	->get('/api/variants',			'Variants::getVariants')
@@ -19,7 +20,8 @@ $routes
 	->get('/api/combos',			'Combos::getCombos')
 
 	->post('/api/combos/:id',			'Combos::createCombos')
-	->post('/api/sync',					'Index::sync')
+	->post('/api/sync/download',		'Index::syncDownload')
+	->post('/api/sync/upload',			'Index::syncUpload')
 	->post('/api/variants/stock/:id',	'Variants::updateStock')
 ;
 

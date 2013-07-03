@@ -4,6 +4,18 @@ Dashboard
 	<li><a href="/products">Products</a></li>
 </ul>
 
-<form action="/api/sync" method="post">
-	<button type="submit">Sync</button>
+<form action="/generate" method="post">
+	<button type="submit">Generate Products</button>
+</form>
+
+<form action="/api/sync/download" method="post">
+	<button type="submit">Sync From Shopify API To DB</button>
+</form>
+
+<br />
+<hr />
+<br />
+
+<form action="/api/sync/upload" method="post">
+	<button type="submit">Sync From DB To Shopify API</button>
 </form>

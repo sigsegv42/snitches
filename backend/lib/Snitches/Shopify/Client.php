@@ -62,6 +62,15 @@ class Client {
 	}
 
 
+	public function createProduct(Model $model) {
+		$client = $this->createClient();
+		$url = 'https://' . $this->_domain . '/admin/products.json';
+		$product = $model->dehydrate();
+		$response = $client->request($url, 'POST', $product);
+
+	}
+
+
 	/**
 	 * Get a single product
 	 *

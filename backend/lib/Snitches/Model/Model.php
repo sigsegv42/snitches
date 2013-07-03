@@ -36,6 +36,14 @@ abstract class Model {
 
 
 	/**
+	 * Convert the model into a json representation
+	 *
+	 * @return string
+	 */
+	abstract public function dehydrate();
+
+
+	/**
 	 * Save the model to the local database
 	 */
 	abstract public function save();

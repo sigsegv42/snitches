@@ -29,6 +29,7 @@ class Product extends Model {
 	public $_dirty = false;
 	public $_images = array();
 	public $_variants = array();
+	public $_options = array();
 
 
 	/**
@@ -49,6 +50,28 @@ class Product extends Model {
 		$this->_updated = new \DateTime($obj->updated_at);
 		$this->_created = new \DateTime($obj->created_at);
 		$this->_dirty = true;
+		foreach ($obj->options as $option) {
+			$this->_options[$option->position] = array('name' => $option->name);
+		}
+	}
+
+
+	/**
+	 * Convert the model into a json representation
+	 *
+	 * @return string
+	 */
+	public function dehydrate() {
+		$obj = new stdClass();
+		$obj->title = $this->_title;
+		$obj->body_html = $this->_body;
+		$obj->vendor = $this->_vendor;
+		$obj->product_type = $this->_type;
+		$obj->tags = $this->_tags;
+		$product = new stdClass();
+		$product->product = $obj;
+		$json = json_encode($product);
+		return $json;
 	}
 
 
@@ -114,6 +137,63 @@ class Product extends Model {
 		$this->_driver->prepare($sql);
 		$result = $this->_driver->exec($values);
 		$this->_dirty = false;
+
+		// save product options
+		$query = new Query();
+		$table = $db->table(Db::TABLE_PRODUCT_OPTION);
+		$matches = array();
+		if ($insert !== true) {
+			$query->
+				column($table->id())->
+				column($table->name())->
+				column($table->position())->
+				from($table)->
+				where($query->expr()->eq($table->productUuid(), $query->param()->string($this->_uuid)));
+			$sql = $query->select();
+			$result = $this->_driver->query($sql);
+			foreach ($result as $record) {
+				if (array_key_exists($record['position'], $this->_options)) {
+					$this->_options[$record['position']]['id'] = $record['product_option_uuid'];
+					if ($this->_options[$record['position']]['name'] != $record['name']) {
+						$query = new Query();
+						$query->
+							column($table->name())->
+							into($table)->
+							where($query->expr()->eq($table->id(), $query->param()->string($record['product_option_uuid'])));
+							$values = array(
+								$this->_options[$record['position']]['name']
+							);
+							$sql = $query->update();
+							$this->_driver->prepare($sql);
+							$result = $this->_driver->exec($values);
+					}
+					$matches[] = $record['position'];
+				}
+			}
+		}
+		foreach ($this->_options as $slot => $option) {
+			if (!in_array($slot, $matches)) {
+				$uuid = new UUID();
+				$optionId = $uuid->v4();
+				$query = new Query();
+				$query->
+					column($table->name())->
+					column($table->position())->
+					column($table->id())->
+					column($table->productUuid())->
+					into($table);
+				$sql = $query->insert();
+				$values = array(
+					$option['name'],
+					$slot,
+					$optionId,
+					$this->_uuid
+				);
+				$this->_driver->prepare($sql);
+				$result = $this->_driver->exec($values);					
+				$this->_options[$slot]['id'] = $optionId;
+			}
+		}
 	}
 
 
